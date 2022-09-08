@@ -1,0 +1,8 @@
+body {
+  display: flex;
+  flex-direction: row;
+}
+.kairysMeniu {
+  height: 100vh;
+  width: 30px;
+}
