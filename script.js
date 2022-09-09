@@ -1,7 +1,14 @@
+//testasvimui
+document
+  .getElementById("mygtukas2")
+  .addEventListener("click", skaiciuIsdalinimas);
+
 document.getElementById("mygtukas").addEventListener("click", vykdom); //stebim mygtuko bukle ir vykdom()
 document.getElementById("number").addEventListener("keypress", mygtukas); //linksmybem : ENTER mygtuko klausymas
 let kvadratuSkaicius = 0;
 let alertSkaicius = 0;
+let duombaze = [];
+let isridentiSkaiciai = [];
 
 function vykdom() {
   //restartuojam jei iveda nauja reiksme (istrinam "bendra" div)
@@ -93,5 +100,31 @@ function mygtukas(event) {
       default:
         break;
     }
+  }
+}
+// nuo skaiciu isdalinimo logika
+function skaiciuIsdalinimas() {
+  let skaiciausRastasDuombazeje = false;
+  let maksSkaiciuKiekis = kvadratuSkaicius * kvadratuSkaicius;
+  let naujasSkaicius = Math.floor(Math.random() * maksSkaiciuKiekis);
+  console.log(naujasSkaicius);
+  do {
+    for (let i = duombaze.length; i < 0; i--) {
+      if (duombaze[i] === naujasSkaicius) {
+        skaiciausRastasDuombazeje = true;
+      }
+    }
+    break;
+  } while (skaiciausRastasDuombazeje === false);
+
+  if (skaiciausRastasDuombazeje === false) {
+    duombaze[duombaze.length + 1] = naujasSkaicius;
+    // return naujasSkaicius;
+    console.log(naujasSkaicius);
+  } else {
+    let naujasSkaicius = Math.floor(Math.random() * maksSkaiciuKiekis);
+    skaiciausRastasDuombazeje = false;
+    skaiciuIsdalinimas();
+    console.log("ieskom vel");
   }
 }
