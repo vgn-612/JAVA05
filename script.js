@@ -1,5 +1,5 @@
 document.getElementById("mygtukas").addEventListener("click", vykdom); //stebim mygtuko bukle ir vykdom()
-document.getElementById("number").addEventListener("keypress", mygtukas); //linksmybem ENTER mygtuko klausymas
+document.getElementById("number").addEventListener("keypress", mygtukas); //linksmybem : ENTER mygtuko klausymas
 let kvadratuSkaicius = 0;
 let alertSkaicius = 0;
 
@@ -13,15 +13,40 @@ function vykdom() {
   if (kvadratuSkaicius == 0) {
     kvadratuSkaicius = document.getElementById("number").value;
     if (kvadratuSkaicius) {
-      if (kvadratuSkaicius < 20) {
+      if (kvadratuSkaicius <= 1) {
+        kvadratuSkaicius = 0;
+        alert(
+          "nu ir kas čia per žaidimas? " +
+            '"' +
+            "prašom" +
+            '"' +
+            " įvesti didesnį skaičių"
+        );
+      }
+      if (kvadratuSkaicius < 21) {
+        //row sukurimas
         for (let i = kvadratuSkaicius; i > 0; i--) {
-          const deze = document.createElement("div");
-          deze.innerHTML = "*";
-          document.getElementById("bendras").appendChild(deze);
+          const row = document.createElement("div");
+          row.innerHTML = "";
+          row.id = "row" + i;
+          document.getElementById("bendras").appendChild(row);
+        }
+        for (let i = kvadratuSkaicius; i > 0; i--) {
+          let row = i;
+          for (let i = kvadratuSkaicius; i > 0; i--) {
+            const deze = document.createElement("div");
+            deze.innerHTML = "";
+            deze.id = "row" + row + "deze" + i;
+            document.getElementById("row" + row).appendChild(deze);
+          }
         }
       } else {
         alert(
-          "...taigi buvo " + '"' + "prašoma" + '"' + " įvesti mažiau nei 20 ..."
+          "nu kas čia dabar? ... taigi buvo " +
+            '"' +
+            "prašoma" +
+            '"' +
+            " įvesti mažiau nei 20 ..."
         );
       }
     } else {
@@ -58,10 +83,14 @@ function mygtukas(event) {
         alert("$#%^%%$#\n...click...");
         alertSkaicius++;
         break;
-      default:
+      case 3:
         alert(
-          "nu kaip sakoma :\nko neišmokai - tai neprilaižysi\nstengemės padėt išmokt... daugiau už tave nespaudinėsim!"
+          "nu kaip sakoma :\nko neišmokai - tai neprilaižysi\nstengiamės padėt išmokt... daugiau už tave nespaudinėsim!"
         );
+        document.getElementById("mygtukas").className = "red";
+        alertSkaicius++;
+        break;
+      default:
         break;
     }
   }
