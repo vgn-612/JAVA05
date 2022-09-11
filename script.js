@@ -45,10 +45,13 @@ function vykdom() {
           let row = i;
           for (let i = kvadratuSkaicius; i > 0; i--) {
             const deze = document.createElement("div");
-            skaiciusIsBazes = (row - 1) * kvadratuSkaicius + i - 1; //skaiciu magija irasyti i dezutes
-            console.log(skaiciusIsBazes, duombaze[skaiciusIsBazes]);
-            deze.innerHTML = duombaze[skaiciusIsBazes];
-            deze.id = "row" + row + "deze" + i;
+
+            //skaiciu magija irasyti i dezutes
+            let w = parseInt(i); // del klaidos pasalinimo
+            let q = (row - 1) * kvadratuSkaicius + w - 1;
+
+            deze.innerHTML = duombaze[q];
+            deze.id = "row" + row + "deze" + w;
             document.getElementById("row" + row).appendChild(deze);
           }
         }
