@@ -8,7 +8,6 @@ document.getElementById("number").addEventListener("keypress", mygtukas); //link
 let kvadratuSkaicius = 0;
 let alertSkaicius = 0;
 let duombaze = [];
-let isridentiSkaiciai = [];
 
 function vykdom() {
   //restartuojam jei iveda nauja reiksme (istrinam "bendra" div)
@@ -42,7 +41,7 @@ function vykdom() {
           let row = i;
           for (let i = kvadratuSkaicius; i > 0; i--) {
             const deze = document.createElement("div");
-            deze.innerHTML = "";
+            deze.innerHTML = "*";
             deze.id = "row" + row + "deze" + i;
             document.getElementById("row" + row).appendChild(deze);
           }
@@ -107,9 +106,9 @@ function skaiciuIsdalinimas() {
   let skaiciausRastasDuombazeje = false;
   let maksSkaiciuKiekis = kvadratuSkaicius * kvadratuSkaicius;
   let naujasSkaicius = Math.floor(Math.random() * maksSkaiciuKiekis);
-  console.log(naujasSkaicius);
+  if (duombaze.length >= maksSkaiciuKiekis) return;
   do {
-    for (let i = duombaze.length; i < 0; i--) {
+    for (let i = 0; i < duombaze.length; i++) {
       if (duombaze[i] === naujasSkaicius) {
         skaiciausRastasDuombazeje = true;
       }
@@ -118,13 +117,19 @@ function skaiciuIsdalinimas() {
   } while (skaiciausRastasDuombazeje === false);
 
   if (skaiciausRastasDuombazeje === false) {
-    duombaze[duombaze.length + 1] = naujasSkaicius;
-    // return naujasSkaicius;
-    console.log(naujasSkaicius);
-  } else {
-    let naujasSkaicius = Math.floor(Math.random() * maksSkaiciuKiekis);
-    skaiciausRastasDuombazeje = false;
+    duombaze[duombaze.length] = naujasSkaicius;
+    console.log(
+      "skaicius : " +
+        naujasSkaicius +
+        " / duombaze : " +
+        duombaze +
+        " / jos ilgis : " +
+        duombaze.length
+    );
+    return naujasSkaicius;
+  }
+  if (skaiciausRastasDuombazeje === true) {
+    console.log("rekomenduotas skaicius rasta duomenu bazeje, ieskom toliau");
     skaiciuIsdalinimas();
-    console.log("ieskom vel");
   }
 }
