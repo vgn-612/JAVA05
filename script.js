@@ -1,7 +1,7 @@
 //testasvimui
 document
   .getElementById("mygtukas2")
-  .addEventListener("click", skaiciuIsdalinimas);
+  .addEventListener("click", duombazesSutvarkymas);
 
 document.getElementById("mygtukas").addEventListener("click", vykdom); //stebim mygtuko bukle ir vykdom()
 document.getElementById("number").addEventListener("keypress", mygtukas); //linksmybem : ENTER mygtuko klausymas
@@ -14,8 +14,9 @@ function vykdom() {
   if (kvadratuSkaicius != 0) {
     document.getElementById("bendras").innerHTML = "";
     kvadratuSkaicius = 0;
+    duombaze = [];
   }
-  //sukuriam kvadratelius
+
   if (kvadratuSkaicius == 0) {
     kvadratuSkaicius = document.getElementById("number").value;
     if (kvadratuSkaicius) {
@@ -30,6 +31,8 @@ function vykdom() {
         );
       }
       if (kvadratuSkaicius < 21) {
+        skaiciuIsdalinimas(); //uzpildom duomenu baze skaiciais
+        duombazesSutvarkymas(); //sutvarkome ja
         //row sukurimas
         for (let i = kvadratuSkaicius; i > 0; i--) {
           const row = document.createElement("div");
@@ -37,11 +40,14 @@ function vykdom() {
           row.id = "row" + i;
           document.getElementById("bendras").appendChild(row);
         }
+        // deziu sukurimas ir uzpildymas row
         for (let i = kvadratuSkaicius; i > 0; i--) {
           let row = i;
           for (let i = kvadratuSkaicius; i > 0; i--) {
             const deze = document.createElement("div");
-            deze.innerHTML = "*";
+            skaiciusIsBazes = (row - 1) * kvadratuSkaicius + i - 1; //skaiciu magija irasyti i dezutes
+            console.log(skaiciusIsBazes, duombaze[skaiciusIsBazes]);
+            deze.innerHTML = duombaze[skaiciusIsBazes];
             deze.id = "row" + row + "deze" + i;
             document.getElementById("row" + row).appendChild(deze);
           }
@@ -101,35 +107,63 @@ function mygtukas(event) {
     }
   }
 }
-// nuo skaiciu isdalinimo logika
+// duombaze uzpildom skaiciais
 function skaiciuIsdalinimas() {
   let skaiciausRastasDuombazeje = false;
   let maksSkaiciuKiekis = kvadratuSkaicius * kvadratuSkaicius;
   let naujasSkaicius = Math.floor(Math.random() * maksSkaiciuKiekis);
   if (duombaze.length >= maksSkaiciuKiekis) return;
   do {
-    for (let i = 0; i < duombaze.length; i++) {
-      if (duombaze[i] === naujasSkaicius) {
-        skaiciausRastasDuombazeje = true;
+    do {
+      for (let i = 0; i < duombaze.length; i++) {
+        if (duombaze[i] === naujasSkaicius) {
+          skaiciausRastasDuombazeje = true;
+        }
       }
-    }
-    break;
-  } while (skaiciausRastasDuombazeje === false);
+      break;
+    } while (skaiciausRastasDuombazeje === false);
 
-  if (skaiciausRastasDuombazeje === false) {
-    duombaze[duombaze.length] = naujasSkaicius;
-    console.log(
-      "skaicius : " +
-        naujasSkaicius +
-        " / duombaze : " +
-        duombaze +
-        " / jos ilgis : " +
-        duombaze.length
-    );
-    return naujasSkaicius;
+    if (skaiciausRastasDuombazeje === false) {
+      duombaze[duombaze.length] = naujasSkaicius;
+      // console.log(
+      //   "skaicius : " +
+      //     naujasSkaicius +
+      //     " / duombaze : " +
+      //     duombaze +
+      //     " / jos ilgis : " +
+      //     duombaze.length
+      // );
+    }
+    if (skaiciausRastasDuombazeje === true) {
+      // console.log(
+      //   "rekomenduotas skaicius rastas duomenu bazeje, siulom nauja - ieskom toliau"
+      // );
+      skaiciuIsdalinimas();
+    }
+  } while (duombaze.length < maksSkaiciuKiekis);
+
+  return;
+}
+
+function duombazesSutvarkymas() {
+  //skaiciu eiles sudubliavimas
+
+  if (duombaze.length % 2 === 0) {
+    // su mazinam iki porinio skaiciaus ir sutvarkome kad nebutu 0
+    for (let i = 0; i < duombaze.length; i++) {
+      duombaze[i] === 0 ? (duombaze[i] = duombaze.length) : null; // nolio pasalinimas ir pridejimas skaiciaus, taip u=tikriname kad didziausio skaiciaus vieta bus random
+    }
+  } else {
+    for (let i = 0; i < duombaze.length; i++) {
+      duombaze[i] === 0 ? (duombaze[i] = duombaze[duombaze.length - 1]) : null; // nuli pakeiciam paskutiniu skaitmeniu
+    }
+    duombaze.pop(); // paskutini skaitmeni ismetam
   }
-  if (skaiciausRastasDuombazeje === true) {
-    console.log("rekomenduotas skaicius rasta duomenu bazeje, ieskom toliau");
-    skaiciuIsdalinimas();
+
+  for (let i = 0; i < duombaze.length; i++) {
+    duombaze[i] > duombaze.length / 2
+      ? (duombaze[i] = duombaze[i] - duombaze.length / 2)
+      : null;
   }
+  console.log("Duombaze po sutvarkymo : " + duombaze);
 }
