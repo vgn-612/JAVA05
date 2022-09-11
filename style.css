@@ -51,4 +51,6 @@ body {
   background-size: contain;
   position: relative;
   /* flex: 1; */
+  color: red;
+  /* display: none; */
 }

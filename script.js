@@ -1,7 +1,7 @@
 //testasvimui
-document
-  .getElementById("mygtukas2")
-  .addEventListener("click", duombazesSutvarkymas);
+// document
+//   .getElementById("mygtukas2")
+//   .addEventListener("click", duombazesSutvarkymas);
 
 document.getElementById("mygtukas").addEventListener("click", vykdom); //stebim mygtuko bukle ir vykdom()
 document.getElementById("number").addEventListener("keypress", mygtukas); //linksmybem : ENTER mygtuko klausymas
@@ -50,7 +50,10 @@ function vykdom() {
             let w = parseInt(i); // del klaidos pasalinimo
             let q = (row - 1) * kvadratuSkaicius + w - 1;
 
-            deze.innerHTML = duombaze[q];
+            duombaze[q]
+              ? (deze.innerHTML = duombaze[q])
+              : (deze.innerHTML = "BONUS");
+
             deze.id = "row" + row + "deze" + w;
             document.getElementById("row" + row).appendChild(deze);
           }
@@ -169,4 +172,9 @@ function duombazesSutvarkymas() {
       : null;
   }
   console.log("Duombaze po sutvarkymo : " + duombaze);
+}
+
+//testavimui
+function testavimui2() {
+  console.log("kazkas paspausta");
 }
