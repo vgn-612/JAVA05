@@ -39,18 +39,35 @@ body {
   margin: 12px;
   /* height: fit-content; */
 }
-.bendras div div {
+.deze {
   display: flex;
+  border: 1px solid black;
   /* border: 1px solid; */
-  background-image: url("/spade.png");
+  /* background-image: url("/spade.png"); */
   /* background-color: #cccccc; */
   height: 64px;
   /* width: 32px; */
-  background-position: center;
+  /* background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
-  position: relative;
+  position: relative; */
   /* flex: 1; */
-  color: red;
   /* display: none; */
+  color: rgba(255, 255, 255, 0);
+}
+.atspetas {
+  height: 64px;
+
+  background-color: red;
+  /* display: none; */
+  /* background-image: none; */
+  /* color: white; */
+  border: none;
+}
+.pazymetas {
+  height: 64px;
+
+  background-color: rgba(248, 0, 0, 0.338);
+  /* border: 1px red solid; */
+  /* color: red; */
 }

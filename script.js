@@ -1,5 +1,5 @@
 //testasvimui
-document.getElementById("mygtukas2").addEventListener("click", testavimui2);
+// document.getElementById("mygtukas2").addEventListener("click", testavimui2);
 
 ///testavimas
 
@@ -13,12 +13,23 @@ let kvadratuSkaicius = 0;
 let alertSkaicius = 0;
 let duombaze = [];
 
+let atidarytuSkaicius = 0;
+let atidarytasSkaiciusIsimintas = 0;
+let atidarytasSkaiciusId = 0;
+
+let atvertuSkaicius = 0;
+
+let counterMinus = 0;
+
 function vykdom() {
   //restartuojam jei iveda nauja reiksme (istrinam "bendra" div)
   if (kvadratuSkaicius != 0) {
     document.getElementById("bendras").innerHTML = "";
     kvadratuSkaicius = 0;
     duombaze = [];
+    counter(0);
+    atvertuSkaicius = 0;
+    counterMinus = 0;
   }
 
   if (kvadratuSkaicius == 0) {
@@ -61,6 +72,7 @@ function vykdom() {
             deze.id = "row" + row + "deze" + w;
             deze.className = "deze";
             document.getElementById("row" + row).appendChild(deze);
+            deze.addEventListener("click", dezesPaspaudimas);
           }
         }
       } else {
@@ -152,7 +164,7 @@ function skaiciuIsdalinimas() {
       skaiciuIsdalinimas();
     }
   } while (duombaze.length < maksSkaiciuKiekis);
-
+  counter();
   return;
 }
 
@@ -180,7 +192,66 @@ function duombazesSutvarkymas() {
 }
 
 //testavimui
-function testavimui2() {
-  let divDeze = document.querySelectorAll("div.deze");
-  console.log(divDeze);
+function dezesPaspaudimas(a) {
+  let skaicius = a.target.innerHTML;
+  let id = a.target.id;
+  if (a.target.className === "atspetas") {
+    return;
+  }
+  if (a.target.innerHTML === "BONUS") {
+    document.getElementById(a.target.id).className = "atspetas";
+    counterMinus++;
+    counter();
+    return;
+  }
+  if (id === atidarytasSkaiciusId) {
+    document.getElementById(atidarytasSkaiciusId).className = "deze";
+    atidarytuSkaicius = 0;
+    return;
+  }
+  console.log("paspaustas" + skaicius);
+  parseInt(skaicius);
+  if (atidarytuSkaicius != 0) {
+    if (atidarytasSkaiciusIsimintas === skaicius) {
+      console.log(
+        "valio" + " deziu ID " + a.target.id + " ir " + atidarytasSkaiciusId
+      );
+      document.getElementById(a.target.id).className = "atspetas";
+      document.getElementById(atidarytasSkaiciusId).className = "atspetas";
+      atvertuSkaicius++;
+    } else {
+      console.log("blogai");
+      //stengiames nors trumpam parodyti bloga varianta
+      document.getElementById(a.target.id).className = "pazymetas";
+      setTimeout(() => {
+        document.getElementById(a.target.id).className = "deze";
+      }, 1000);
+      ///iki cia blogo varianto parodymas
+
+      document.getElementById(atidarytasSkaiciusId).className = "deze";
+    }
+    atidarytuSkaicius = 0;
+  } else {
+    atidarytuSkaicius = 1;
+    document.getElementById(a.target.id).className = "pazymetas";
+    atidarytasSkaiciusIsimintas = skaicius;
+    atidarytasSkaiciusId = a.target.id;
+  }
+  counter();
+}
+
+function counter(b) {
+  let a =
+    kvadratuSkaicius * kvadratuSkaicius - atvertuSkaicius * 2 - counterMinus;
+  if (b == 0) {
+    console.log("counter 0");
+    a = 0;
+    document.getElementById("counter").innerHTML = a;
+
+    return;
+  }
+  document.getElementById("counter").innerHTML = a;
+  if (a == 0) {
+    document.getElementById("counter").innerHTML = "VALIO !!!";
+  }
 }
