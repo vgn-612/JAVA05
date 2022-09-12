@@ -1,7 +1,11 @@
 //testasvimui
-// document
-//   .getElementById("mygtukas2")
-//   .addEventListener("click", duombazesSutvarkymas);
+document.getElementById("mygtukas2").addEventListener("click", testavimui2);
+
+///testavimas
+
+//document.querySelectorAll("div.deze").addEventListener("click", testavimui2);
+
+///testavimas iki cia
 
 document.getElementById("mygtukas").addEventListener("click", vykdom); //stebim mygtuko bukle ir vykdom()
 document.getElementById("number").addEventListener("keypress", mygtukas); //linksmybem : ENTER mygtuko klausymas
@@ -55,6 +59,7 @@ function vykdom() {
               : (deze.innerHTML = "BONUS");
 
             deze.id = "row" + row + "deze" + w;
+            deze.className = "deze";
             document.getElementById("row" + row).appendChild(deze);
           }
         }
@@ -176,5 +181,6 @@ function duombazesSutvarkymas() {
 
 //testavimui
 function testavimui2() {
-  console.log("kazkas paspausta");
+  let divDeze = document.querySelectorAll("div.deze");
+  console.log(divDeze);
 }
