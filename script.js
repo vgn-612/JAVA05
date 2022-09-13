@@ -43,6 +43,8 @@ function vykdom() {
         );
       }
       if (kvadratuSkaicius < 21) {
+        //laiko paleidimas
+        laikoPaleidimas = true;
         //paneles veiksmu pagrazinimas
         document.getElementById("instruction")
           ? document.getElementById("instruction").remove()
@@ -74,7 +76,6 @@ function vykdom() {
           laikasDivKurimas = document.createElement("div");
           laikasDivKurimas.id = "seconds";
           document.getElementById("laikasDiv").appendChild(laikasDivKurimas);
-          laikoPaleidimas = true;
         }
         //iki cia paneles pagrazinimas
         skaiciuIsdalinimas(); //uzpildom duomenu baze skaiciais
