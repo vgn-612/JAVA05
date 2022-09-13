@@ -1,12 +1,3 @@
-//testasvimui
-// document.getElementById("mygtukas2").addEventListener("click", testavimui2);
-
-///testavimas
-
-//document.querySelectorAll("div.deze").addEventListener("click", testavimui2);
-
-///testavimas iki cia
-
 document.getElementById("mygtukas").addEventListener("click", vykdom); //stebim mygtuko bukle ir vykdom()
 document.getElementById("number").addEventListener("keypress", mygtukas); //linksmybem : ENTER mygtuko klausymas
 let kvadratuSkaicius = 0;
@@ -20,6 +11,9 @@ let atidarytasSkaiciusId = 0;
 let atvertuSkaicius = 0;
 
 let counterMinus = 0;
+let spejimuSkaicius = 0; //skaiciuosim kiek kartu spejo
+
+let laikoPaleidimas = false; // laiko paleidimas
 
 function vykdom() {
   //restartuojam jei iveda nauja reiksme (istrinam "bendra" div)
@@ -30,7 +24,9 @@ function vykdom() {
     counter(0);
     atvertuSkaicius = 0;
     counterMinus = 0;
+    spejimuSkaicius = 0;
   }
+  //restartavimas iki cia
 
   if (kvadratuSkaicius == 0) {
     kvadratuSkaicius = document.getElementById("number").value;
@@ -46,6 +42,40 @@ function vykdom() {
         );
       }
       if (kvadratuSkaicius < 21) {
+        //paneles veiksmu pagrazinimas
+        document.getElementById("instruction")
+          ? document.getElementById("instruction").remove()
+          : null; //panaikinam instrukcijas
+        if (document.getElementById("counter")) {
+          null;
+        } else {
+          document.getElementById("likoDiv").className = "likoDiv";
+          let likoDivKurimas = document.createElement("p");
+          likoDivKurimas.innerHTML = "Liko dežučių :";
+          document.getElementById("likoDiv").appendChild(likoDivKurimas);
+          likoDivKurimas = document.createElement("div");
+          likoDivKurimas.id = "counter";
+          document.getElementById("likoDiv").appendChild(likoDivKurimas);
+          document.getElementById("vertimaiDiv").className = "vertimaiDiv";
+          let likoDivKurimas2 = document.createElement("p");
+          likoDivKurimas2.innerHTML = "Vertimai :";
+          document.getElementById("vertimaiDiv").appendChild(likoDivKurimas2);
+          likoDivKurimas2 = document.createElement("div");
+          likoDivKurimas2.id = "counter2";
+          document.getElementById("vertimaiDiv").appendChild(likoDivKurimas2);
+          document.getElementById("laikasDiv").className = "laikasDiv";
+          laikasDivKurimas = document.createElement("div");
+          laikasDivKurimas.id = "minutes";
+          document.getElementById("laikasDiv").appendChild(laikasDivKurimas);
+          laikasDivKurimas = document.createElement("div");
+          laikasDivKurimas.innerHTML = " : ";
+          document.getElementById("laikasDiv").appendChild(laikasDivKurimas);
+          laikasDivKurimas = document.createElement("div");
+          laikasDivKurimas.id = "seconds";
+          document.getElementById("laikasDiv").appendChild(laikasDivKurimas);
+          laikoPaleidimas = true;
+        }
+        //iki cia paneles pagrazinimas
         skaiciuIsdalinimas(); //uzpildom duomenu baze skaiciais
         duombazesSutvarkymas(); //sutvarkome ja
         //row sukurimas
@@ -60,7 +90,6 @@ function vykdom() {
           let row = i;
           for (let i = kvadratuSkaicius; i > 0; i--) {
             const deze = document.createElement("div");
-
             //skaiciu magija irasyti i dezutes
             let w = parseInt(i); // del klaidos pasalinimo
             let q = (row - 1) * kvadratuSkaicius + w - 1;
@@ -148,19 +177,8 @@ function skaiciuIsdalinimas() {
 
     if (skaiciausRastasDuombazeje === false) {
       duombaze[duombaze.length] = naujasSkaicius;
-      // console.log(
-      //   "skaicius : " +
-      //     naujasSkaicius +
-      //     " / duombaze : " +
-      //     duombaze +
-      //     " / jos ilgis : " +
-      //     duombaze.length
-      // );
     }
     if (skaiciausRastasDuombazeje === true) {
-      // console.log(
-      //   "rekomenduotas skaicius rastas duomenu bazeje, siulom nauja - ieskom toliau"
-      // );
       skaiciuIsdalinimas();
     }
   } while (duombaze.length < maksSkaiciuKiekis);
@@ -219,8 +237,10 @@ function dezesPaspaudimas(a) {
       document.getElementById(a.target.id).className = "atspetas";
       document.getElementById(atidarytasSkaiciusId).className = "atspetas";
       atvertuSkaicius++;
+      spejimuSkaicius++;
     } else {
       console.log("blogai");
+      spejimuSkaicius++;
       //stengiames nors trumpam parodyti bloga varianta
       document.getElementById(a.target.id).className = "pazymetas";
       setTimeout(() => {
@@ -251,7 +271,36 @@ function counter(b) {
     return;
   }
   document.getElementById("counter").innerHTML = a;
+  document.getElementById("counter2").innerHTML = spejimuSkaicius;
+
   if (a == 0) {
-    document.getElementById("counter").innerHTML = "VALIO !!!";
+    document.getElementById("counter").innerHTML = "-";
+    laikoPaleidimas = false;
+  }
+}
+
+//pasiskolinta is interneto
+
+let totalSeconds = 0;
+
+setInterval(setTime, 1000);
+
+function setTime() {
+  if (laikoPaleidimas) {
+    ++totalSeconds;
+
+    document.getElementById("seconds").innerHTML = pad(totalSeconds % 60);
+    document.getElementById("minutes").innerHTML = pad(
+      parseInt(totalSeconds / 60)
+    );
+  }
+}
+
+function pad(val) {
+  var valString = val + "";
+  if (valString.length < 2) {
+    return "0" + valString;
+  } else {
+    return valString;
   }
 }

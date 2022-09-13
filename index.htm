@@ -3,20 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <script
+      src="https://kit.fontawesome.com/018e5996ec.js"
+      crossorigin="anonymous"
+    ></script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
-    <title>Loading...</title>
+    <title>Memory game</title>
   </head>
   <body>
     <div class="kairysMeniu">
-      <p>Įvedam skaičių :</p>
+      <h3>Memory game</h3>
+      <div id="instruction" class="instruction">
+        <p>Instrukcijos :</p>
+        <p>Įvedam skaičių</p>
+        <p>ir spaudžiam</p>
+      </div>
 
-      <input id="number" type="number" placeholder="Max 20" />
-      <button id="mygtukas">spaudžiam</button>
-      <p>Liko kortų :</p>
-      <div id="counter"></div>
+      <div class="inputDiv">
+        <input id="number" type="number" placeholder="Max 20" />
+        <button id="mygtukas"><i class="fa-solid fa-play"></i></button>
+      </div>
+      <div id="likoDiv"></div>
+      <div id="vertimaiDiv"></div>
+      <div id="laikasDiv">
+        <!-- <p>Laikas :</p>
+        <label id="minutes">00</label>:<label id="seconds">00</label> -->
+      </div>
       <!-- <button id="mygtukas2">testavimui</button> -->
     </div>
     <div id="bendras" class="bendras"></div>
