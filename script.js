@@ -25,6 +25,7 @@ function vykdom() {
     atvertuSkaicius = 0;
     counterMinus = 0;
     spejimuSkaicius = 0;
+    totalSeconds = 0;
   }
   //restartavimas iki cia
 
