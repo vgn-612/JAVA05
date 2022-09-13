@@ -54,7 +54,7 @@ function vykdom() {
         } else {
           document.getElementById("likoDiv").className = "likoDiv";
           let likoDivKurimas = document.createElement("p");
-          likoDivKurimas.innerHTML = "Liko dežučių :";
+          likoDivKurimas.innerHTML = "Liko :";
           document.getElementById("likoDiv").appendChild(likoDivKurimas);
           likoDivKurimas = document.createElement("div");
           likoDivKurimas.id = "counter";
@@ -79,6 +79,7 @@ function vykdom() {
         }
         //iki cia paneles pagrazinimas
         skaiciuIsdalinimas(); //uzpildom duomenu baze skaiciais
+
         duombazesSutvarkymas(); //sutvarkome ja
         //row sukurimas
         for (let i = kvadratuSkaicius; i > 0; i--) {
